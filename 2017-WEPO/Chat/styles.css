@@ -1,0 +1,19 @@
+.full-score {
+	color: #339933;
+}
+
+.ok-score {
+	color: #CC9933;
+}
+
+.bad-score {
+	color: #CC0000;
+}
+
+.hovering {
+	background-color: rgba(199, 199, 199, 0.3);
+}
+
+.current-template {
+	background-color: rgba(150, 150, 150, 0.3);
+}
