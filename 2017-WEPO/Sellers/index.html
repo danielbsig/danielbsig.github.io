@@ -1,0 +1,126 @@
+<html ng-app="TemplateApp">
+	<head>
+		<title>Vefforritun II - Skilaverkefni 2</title>
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<script src="jquery.js"></script>
+		<script src="angular.js"></script>
+		<script src="app.js"></script>
+
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a href="../" class="navbar-brand">Skilaverkefni 3 - seljendur</a>
+					
+				</div>
+			</div>
+		</div>
+		<div class="row" ng-controller="TemplateController" >
+
+			<div class="col-md-offset-1 col-md-8" ng-hide="doneGrading">
+				<h4>{{ currentTemplate.description }}</h4>
+				<div class="form-group">
+					<label for="teacherName" class="col-sm-2 control-label">Teacher</label>
+					<div class="col-sm-10">
+						<input type="text"
+							id="teacherName"
+							ng-model="teacher"
+							class="form-control"
+							placeholder="Teacher name here!"
+							autofocus />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="gradeGiven" class="col-sm-2 control-label">Grade</label>
+					<div class="col-sm-10">
+						<input ng-model="currentTemplate.result" class="form-control" id="gradeGiven" placeholder="Grade" ng-change="updateGrade(currentTemplate)">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="commentGiven" class="col-sm-2 control-label">Comment</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" ng-model="currentTemplate.comment" rows="10" placeholder="Optional .." id="commentGiven" ng-keypress="checkIfTabWasPressed($event)"></textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-offset-8 col-xs-offset-8 col-md-4 col-xs-4">
+						<button class="btn btn-sm" ng-click="previousTemplate()">Previous requirement</button>
+						<button class="btn btn-sm btn-success" ng-click="nextTemplate()">Next requirement</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-offset-1 col-md-8" ng-show="doneGrading">
+				<h2>Result:</h2>
+				<textarea ng-model="result" class="form-control" rows="20"></textarea>
+				<a class="btn btn-default" ng-click="doneGrading = false">&larr; Go back</a>
+				<a class="btn btn-default" ng-click="nextAssignment()">I'm done, next please! &rarr; </a>
+			</div>
+			<div class="col-md-3 col-xs-3">
+				<div class="well bs-sidebar affix">
+					<h2>Summary: </h2>
+					<table class="table table-hover">
+						<tr ng-repeat="template in templates"
+							ng-mouseenter="templateMouseEvent(template, true)"
+							ng-mouseleave="templateMouseEvent(template, false)"
+							ng-class="{ 'current-template': template.id === currentTemplate.id }">
+							<td ng-click="selectTemplate(template)">
+								<span class="text-muted {{ classByScore(template.result, template.value) }}" title="{{ template.description }}" style="font-size: 13px">{{ shorten(template.description) }}</span>
+							</td>
+							<td>{{ template.result }}/{{template.value}}</td>
+						</tr>
+					</table>
+					<h3>Grade: {{ ((currentGrade/maxGrade)*10).toFixed(1) }} <span class="text-muted">({{ currentGrade }} / {{ maxGrade }})</span></h3>
+					<div>
+						<button ng-click="generateResult()" class="btn btn-success">Done grading</button>
+						<button class="btn btn-warning" ng-click="clear()">Clear all fields</button>
+					</div>
+				</div>
+			</div>
+			<!--
+			<div class="col-md-offset-1 col-md-8 col-xs-8" ng-hide="doneGrading">
+				<h2>Student/s name: {{ student }}</h2>
+				<input ng-model="student" class="form-control" placeholder="Name of student/s" />
+				<table class="table table-condensed">
+					<thead>
+						<th>Weight</th>
+						<th>Description</th>
+						<th>Grade</th>
+						<th>Comment</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="template in templates" ng-class="{ 'hovering': template.hovering }">
+							<td><span ng-show="template.isBonus">Bonus </span>{{ template.value }}%</td>
+							<td>{{ template.description }}</td>
+							<td><input ng-model="template.result" class="form-control" ng-change="updateGrade(template)" /></td>
+							<td><textarea class="form-control" ng-model="template.comment"></textarea></td>
+						</tr>
+					</tbody>
+				</table>
+				<button ng-click="generateResult()" class="btn btn-lg btn-success">Done grading</button>
+			</div>
+			<div class="col-md-offset-1 col-md-8" ng-show="doneGrading">
+				<h2><a class="btn btn-default" ng-click="doneGrading = false">&larr; Go back</a> Result: </h2>
+				<textarea ng-model="result" class="form-control" rows="20"></textarea>
+			</div>
+			<div class="col-md-3 col-xs-3">
+				<div class="well bs-sidebar affix">
+					<h2>Summary: </h2>
+					<table class="table table-hover">
+						<tr ng-repeat="template in templates" ng-mouseenter="templateMouseEvent(template, true)" ng-mouseleave="templateMouseEvent(template, false)">
+							<td><span class="text-muted {{ classByScore(template.result, template.value) }}" title="{{ template.description }}" style="font-size: 13px">{{ shorten(template.description) }}</span></td>
+							<td>{{ template.result }}/{{template.value}}</td>
+						</tr>
+					</table>
+					<h3>Grade: {{ ((currentGrade/maxGrade)*10).toFixed(1) }} <span class="text-muted">({{ currentGrade }} / {{ maxGrade }})</span></h3>
+					<div>
+						<button class="btn btn-lg btn-primary btn-warning" ng-click="clear()">Clear all fields</button>
+					</div>
+				</div>
+			</div>
+			-->
+		</div>
+	</body>
+</html>
