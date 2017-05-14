@@ -44,7 +44,7 @@ app.controller("TemplateController", function($scope, $timeout) {
 		$scope.templates.push(addTemplate(20, "Changes in requirements"));
 		$scope.templates.push(addTemplate(20, "Diary"));
 		$scope.templates.push(addTemplate(20, "Updated class diagram"));
-		$scope.templates.push(addTemplate(10, "Other"));
+		$scope.templates.push(addTemplate(10, "Other (such as finishing)"));
 	}
 	$scope.clear = function() {
 		var userIsSure = confirm("Are you sure you want to clear all fields?");
